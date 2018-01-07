@@ -1,7 +1,7 @@
 // models
+const logger = require('./logger');
 const Database = require('./database');
 const db = new Database();
-
 
 module.exports = {
   /** Get all items **/
@@ -9,13 +9,13 @@ module.exports = {
     db.query('SELECT * FROM prices')
       .then((items) => {
         if (items.length > 0) {
-          res.json({success: true, items, message: 'No items found in database. Please try later'})
-        } else {
           res.json({success: true, items})
+        } else {
+          res.json({success: true, items, message: 'No items found in database. Please try later'})
         }
       })
       .catch((err) => {
-        console.log(err);
+        logger.writeError(err);
         res.json({success: false, message: 'Oops! Some error occurs. Please try later'});
       });
   },
@@ -33,7 +33,7 @@ module.exports = {
         }
       })
       .catch((err) => {
-        console.log(err);
+        logger.writeError(err);
         res.json({success: false, message: 'Some error occurs. Please try later'});
       });
   }

@@ -9,18 +9,16 @@ const express = require('express');
 const cronJob = require('./models/cronJob');
 const steamRequest = require('./models/steamRequest');
 const restOperations = require('./models/restOperations');
+const logger = require('./models/logger');
 
 /** Get steam prices every hour **/
 // pattern: (sec/min/hour/day of month/month/day of week)
 cronJob('00 00 * * * *', steamRequest);
 
-steamRequest();
-
 /** Server **/
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 7000;
 const server = http.createServer(app);
-
 
 app.get('/', (req, res) => {
   res.send('Please use "/prices" to get all prices and "/prices/item name" to get specified item')
@@ -32,5 +30,5 @@ app.get('/prices/:itemName', restOperations.getPricesByItemName);
 
 
 server.listen(port, () => {
-  console.log(`server is up on port ${port}`);
+  logger.writeInfo(`server is up on port ${port}`);
 });

@@ -1,16 +1,17 @@
 const CronJob = require('cron').CronJob;
+const logger = require('./logger');
 
 /**  Start Cron Job **/
 const startCron = (cronPattern, functionToExecute) => {
   try {
     new CronJob(cronPattern, functionToExecute, cronJobStops, true, 'Europe/Kiev');
   } catch (ex) {
-    console.log("cron pattern not valid");
+    logger.writeError("cron pattern not valid");
   }
 };
 
 const cronJobStops = () => {
-  console.log('CronJob stops')
+  logger.writeInfo("cron pattern not valid");
 };
 
 module.exports = startCron;
