@@ -83,7 +83,6 @@ module.exports = () => {
     .then(() => db.query('TRUNCATE prices'))
     .then(() => db.query(`LOAD DATA LOCAL INFILE '${dataPathPrices}' INTO TABLE prices`))
     .then(() => {
-      db.close();
       logger.writeInfo('Steam prices successfully loaded into DB');
     })
     .catch((err) => logger.writeError(err));
